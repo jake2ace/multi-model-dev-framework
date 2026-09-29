@@ -1,5 +1,7 @@
 # multi-model-dev-framework
 
+**简体中文** | [English](README.en.md)
+
 A project-agnostic, file-based workflow for multi-model development and review.
 
 通用的多模型协作开发框架：工程开始前，由开发者与选定的总控共同确定各角色、模型、effort、审查与升级路线。支持 Codex 和未来的 Claude 接入，角色不绑定具体模型。
@@ -13,6 +15,7 @@ A project-agnostic, file-based workflow for multi-model development and review.
 - 固定规则计划交给脚本；模型负责需要判断的工作。
 - 完整结果落盘，总控读取摘要，审查者读取实际产出与证据。
 - 模型角色与提供方分离，调整模型或启用 Claude 时调整映射，不重写流程。
+- 工程启动时选择中文或英文交流及产物语言，只读取所需语言版本，避免双份文档占用上下文。
 
 ## 角色可配置
 
@@ -52,7 +55,8 @@ Astra 总控、Luna 执行低等级任务、Sol 审查只是一个可选示例�
 ├── CLAUDE.md                  # Claude 未来接入规则
 ├── board.md                   # 空白看板，格式待定
 ├── docs/
-│   └── workflow.md            # 流程、预算和待定问题
+│   ├── workflow.md            # 流程、预算和待定问题
+│   └── context-mode.md        # MCP 使用与上游更新入口
 ├── templates/
 │   ├── PROJECT_CONTEXT.md     # 通用项目输入模板
 │   └── WORKFLOW_PROFILE.md    # 角色、路由与启动确认模板
@@ -85,6 +89,12 @@ Astra 总控、Luna 执行低等级任务、Sol 审查只是一个可选示例�
 已确认配置内的日常任务按规则执行；更换总控、启用提供方或改变工程边界时再由开发者确认。
 当前只有文档约定，没有自动验证或执行配置的程序。
 
+## context-mode：MCP 使用与功能更新
+
+[官方仓库](https://github.com/mksglu/context-mode) · [最新正式版本](https://github.com/mksglu/context-mode/releases/latest) · [更新说明](https://github.com/mksglu/context-mode/releases) · [近期提交](https://github.com/mksglu/context-mode/commits/main/)
+
+以上链接直接通往上游当前内容。[MCP 使用说明](docs/context-mode.md)列出了适用工具、核验与使用方式。减少原始文本进入上下文，可以减少部分 token 消耗；不等于已实测降低 Codex 周额度。本框架不会自动监控、安装或升级 context-mode。
+
 ## 使用边界与状态
 
 无需安装依赖即可阅读和使用文档；没有启动命令。
@@ -92,17 +102,25 @@ Astra 总控、Luna 执行低等级任务、Sol 审查只是一个可选示例�
 
 | 能力 | 状态 |
 | --- | --- |
-| 分工、审查与升级约定 | 文档草案 |
+| 中英文文档、规则与模板 | 已提供 |
+| 分工、审查与升级约定 | 文档约定 |
 | 项目上下文输入 | 模板与人工读取约定 |
 | Claude 接口 | 文档预留，禁用 |
 | `codex exec` / `claude -p` 调用 | 未实现 |
-| context-mode | 计划接入，未验证 |
+| context-mode | 已提供工具说明和上游链接；运行接入未验证 |
 | 25 分钟切块、摘要与恢复 | 规则已记录，自动机制未实现 |
 | 自动看板、计数、路由 | 未实现 |
 | 节省额度 | 未实测，不作量化承诺 |
 
 后续先确定任务文件格式、复杂任务执行和接管路线，再逐步实现适配器与固定规则。
 完整流程见 [docs/workflow.md](docs/workflow.md)。
+
+## 反馈与贡献
+
+欢迎通过 GitHub **Issues** 提建议、报告问题，或 Fork 后从自己的分支提交 **Pull Request**。
+**是否合并到 `main` 由仓库所有者决定。** 提交 PR、审查通过或检查通过都不代表可以自动合并。代理不得直接推送 `main`、合并 PR 或启用自动合并。
+
+详见 [贡献指南](CONTRIBUTING.md) / [English](CONTRIBUTING.en.md)。仓库分支保护是 GitHub 设置，与文档规则分开维护。
 
 ## 许可证
 
