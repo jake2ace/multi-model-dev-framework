@@ -1,0 +1,18 @@
+.DS_Store
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Keep scaffolding; do not publish private project inputs or run artifacts.
+/projects/*
+!/projects/.gitkeep
+/tasks/*
+!/tasks/.gitkeep
+/outputs/*
+!/outputs/.gitkeep
+/reviews/*
+!/reviews/.gitkeep
+/summaries/*
+!/summaries/.gitkeep
