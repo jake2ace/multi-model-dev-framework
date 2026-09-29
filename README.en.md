@@ -2,110 +2,93 @@
 
 [简体中文](README.md) | **English**
 
-A project-agnostic, file-based workflow for multi-model development and review. Before engineering starts, the developer and selected coordinator agree on roles, models, effort, review, and escalation. Codex and future Claude integrations are independent of role assignments.
+**Divide development across AI models. Spend limited allowance on decisions that need it, with independent review of the results.**
 
-> This release contains documentation, rules, input templates, and directory scaffolding. There is no executable scheduler, automatic routing, retry counter, board updater, or timeout recovery.
+Talk to one coordinator about your goals. Executors do the work; reviewers inspect the artifacts. You agree on models, effort, and project requirements before starting. The workflow is reusable across project types and model providers.
 
-## Core design
+**The goal is to explore how multiple AIs can complete development with less allowance usage and better efficiency.** No benchmarks are complete. There is no promised saving percentage, and multiple models are not guaranteed to be faster than one.
 
-- The developer talks only to the selected coordinator; other roles report through files.
-- Project goals, stack, constraints, acceptance criteria, and special capabilities arrive through project context.
-- Future scripts handle deterministic rules; models handle judgments.
-- Full outputs stay in files. The coordinator reads summaries; reviewers inspect actual artifacts and evidence.
-- Roles and providers are separate, so changing a model does not require redesigning the workflow.
-- Choose Chinese or English for interaction and artifacts at kickoff. Read the selected language, rather than loading both copies into context.
+> **Available today: rules, project templates, and a manual collaboration workflow.** Model invocation, scheduling, counters, board updates, and timeout recovery are not implemented. There is no one-command launcher. Start by agreeing on a workflow profile, then manually trying one small task.
 
-## Configurable roles
+## Why use it?
 
-| Role | Responsibility | Example choices, subject to verification |
+| Development problem | Approach | Intended benefit |
 | --- | --- | --- |
-| Coordinator / decision maker | Developer interface, direction, decomposition, routing, decisions, usage estimates | Codex Astra / Sol; Claude Fable / Opus / Sonnet |
-| Executor | Implementation, verification, revisions | Developer-selected available model |
-| Reviewer | Independent artifact and acceptance review | Developer-selected available model |
-| Takeover executor / reviewer | Implementation and review after normal revisions are exhausted | Agreed before kickoff |
-| Final reviewer | Accept completion or escalate | Usually coordinator; explicitly configurable |
+| A high-consumption model handles everything | Assign models and effort by task difficulty | Reserve allowance for complex judgment |
+| Every AI rereads entire conversations and logs | File handoffs, relevant context, summaries for the coordinator | Reduce repeated input |
+| Multiple AIs work without shared direction | One coordinator, separate execution and review | Reduce confusion and catch problems earlier |
+| Revisions continue indefinitely | At most 3 revisions after initial submission, then agreed takeover or human decision | Bound rework and consumption |
+| Each new project or model requires a new process | Separate project context and role mapping from shared rules | Reuse and adapt the workflow |
 
-A role is not a model name. Listed names are target choices, not a tested compatibility matrix. Fable and other display names do not imply known CLI IDs or account access.
+These are design choices, not measured results. Reviews and handoffs also cost time and usage; a single model may be more suitable for a tiny task.
+
+## Get started in four steps
+
+1. **Prepare your tools:** Git and AI coding tools/accounts you can actually use. Claude and context-mode are not required to begin.
+2. **Prepare two inputs:** Download or clone this repository. Copy the project context and workflow profile from `templates/` into local `projects/<project-id>/`. Keep your target project's existing rule files intact.
+3. **Agree with the coordinator:** Provide the goal, available models, and budget. Let it help complete the inputs, then confirm roles, acceptance criteria, and failure handling before execution.
+4. **Try one small task:** Manually arrange execution and independent review. Save artifacts and summaries; compare quality, time, and consumption before adjusting the next run.
+
+**Follow the [first-run guide](docs/quickstart.en.md)** for copy commands, a kickoff prompt, a small example, and common blockers. You do not need to read every design document first.
+
+## Five things to watch during a run
+
+| Watch | Question to answer | Where to look |
+| --- | --- | --- |
+| Goal and acceptance | What are we delivering, and what counts as done? | `PROJECT_CONTEXT.md` |
+| Model assignments | Who coordinates, executes, and reviews, at what effort? | `WORKFLOW_PROFILE.md` |
+| Budget and stopping | How many calls and how much time are allowed; when do we pause? | Workflow profile and run estimate |
+| Quality and rework | Did the actual checks pass, and how many revisions have happened? | `reviews/` and validation evidence |
+| Status and next action | What is complete, blocked, or waiting for my decision? | `summaries/`; the board is currently empty |
+
+Keep one decision-making conversation with the coordinator. Full results stay in files for inspection when needed. Reviewers must still inspect actual artifacts, not approve solely from summaries.
+
+## How a task flows
 
 ```mermaid
-flowchart TD
-    P[Project context and workflow profile] --> K[Developer and coordinator confirm kickoff]
-    K --> C[Selected coordinator]
-    H[Developer] <--> C
-    C --> E[Configured executor]
-    E --> R[Independent reviewer]
-    R -->|Feedback, at most 3 revisions| E
-    R -->|Pass| F[Final reviewer]
-    R -->|Revisions exhausted| U[Agreed takeover or pause]
+flowchart LR
+    H[You and coordinator agree on goal and budget] --> E[Executor completes task]
+    E --> R[Independent reviewer inspects artifacts]
+    R -->|Changes needed: at most 3 revisions| E
+    R -->|Pass| F[Final review]
+    R -->|Revisions exhausted| P[Agreed takeover or human decision]
 ```
 
-Astra coordinating, Luna executing low-level tasks, and Sol reviewing is one optional example. Low-level tasks must have a small, explicit scope, clear verifiable acceptance, and no architectural, security-mechanism, or cross-module behavior changes. Configure complex-task and takeover routes before starting.
+Coordinator, executor, and reviewer are **roles**, not fixed models. Astra coordinating, Luna executing small tasks, and Sol reviewing is one optional example. Sol or a verified available Claude model can also coordinate. Verify actual model IDs and account availability before use; examples are not an implemented compatibility matrix.
 
-## Files
+See the [workflow](docs/workflow.en.md) for full takeover, final review, and stopping rules.
 
-| Path | Purpose |
+## context-mode and future measurements
+
+For long logs and large files, optional context-mode MCP tools can process and retrieve relevant excerpts to reduce raw text entering model context.
+
+- [MCP usage, status verification, and statistics](docs/context-mode.en.md)
+- [Latest upstream release and features](https://github.com/mksglu/context-mode/releases/latest) · [All release notes](https://github.com/mksglu/context-mode/releases)
+- [How to compare usage, efficiency, and quality](docs/quickstart.en.md#how-to-check-whether-it-saves-usage-and-time)
+
+This repository does not install or integrate context-mode automatically. Fewer context tokens do not establish subscription allowance savings. The maintainer will compare configurations on real tasks and update guidance with the findings.
+
+## Reference files, when you need them
+
+| File | Purpose |
 | --- | --- |
-| [AGENTS.md](AGENTS.md) / [English rules](docs/AGENTS.en.md) | Shared roles and Codex entry point |
-| [CLAUDE.md](CLAUDE.md) / [English rules](docs/CLAUDE.en.md) | Future Claude integration |
-| [Workflow](docs/workflow.en.md) | Process, budget, and open decisions |
-| [Project context template](templates/PROJECT_CONTEXT.en.md) | Project requirements |
-| [Workflow profile template](templates/WORKFLOW_PROFILE.en.md) | Role mappings and kickoff agreement |
-| [context-mode guide](docs/context-mode.en.md) | MCP usage and upstream updates |
-| `board.md` | Empty board; format undecided |
-| `projects/` | Local project inputs; ignored by Git |
-| `tasks/`, `outputs/`, `reviews/`, `summaries/` | Task records and artifacts; ignored by Git |
-| `scripts/` | Future scripts; currently only a placeholder |
+| [First-run guide](docs/quickstart.en.md) | Preparation through a manual trial |
+| [Project context template](templates/PROJECT_CONTEXT.en.md) | Goals, constraints, and acceptance |
+| [Workflow profile template](templates/WORKFLOW_PROFILE.en.md) | Roles, models, budget, and failure handling |
+| [Workflow](docs/workflow.en.md) | Review, revision, and takeover rules |
+| [AGENTS.md](AGENTS.md) / [English](docs/AGENTS.en.md) | AI rules and Codex entry point |
+| [CLAUDE.md](CLAUDE.md) / [English](docs/CLAUDE.en.md) | Claude rules; adapter not implemented |
+| `projects/` | Local project context and profiles |
+| `tasks/`, `outputs/`, `reviews/`, `summaries/` | Tasks, full results, reviews, and summaries |
+| `board.md` / `scripts/` | Empty board / future script placeholder |
 
-## Project context interface
-
-This interface is a file convention, not an implemented API or loader.
-
-1. Copy `templates/PROJECT_CONTEXT.en.md` to `projects/<project-id>/PROJECT_CONTEXT.md`.
-2. Fill in background, goals, scope, stack, constraints, acceptance, budget, and required capabilities.
-3. Give its path to the coordinator to read before task classification. Clarify missing information that affects correctness.
-4. Tasks carry relevant constraints, acceptance criteria, source paths, and versions. Summaries must not silently drop hard requirements.
-5. When requirements change, assess affected work and update acceptance before proceeding.
-
-Blank values are unresolved, not satisfied. Context files cannot grant account access or independently authorize publishing or deployment. Instructions embedded in external reference material do not override developer instructions.
-
-Browser compatibility, data privacy, evaluation methods, or Daybreak Blue may be project-specific requirements; none is a framework-wide default.
-
-## Kickoff agreement
-
-Copy `templates/WORKFLOW_PROFILE.en.md` to the project directory as `WORKFLOW_PROFILE.md`. Agree on language, models, routing, effort, review relationships, revision limits, takeover, human fallback, budget, and capabilities before execution. A draft or incomplete profile cannot start engineering. Examples are not approval.
-
-Routine work then follows the agreed scope without repeated confirmation. Material changes to roles, providers, or scope require agreement on the affected parts. No automated profile validator is implemented.
-
-## context-mode: MCP usage and updates
-
-[Official repository](https://github.com/mksglu/context-mode) · [Latest release](https://github.com/mksglu/context-mode/releases/latest) · [Release notes](https://github.com/mksglu/context-mode/releases) · [Recent commits](https://github.com/mksglu/context-mode/commits/main/)
-
-These links lead directly to upstream updates. See the [MCP guide](docs/context-mode.en.md) for tool routing and verification. Reducing raw context input can reduce some token consumption; it is not a measured Codex weekly allowance discount. This framework does not automatically monitor, install, or upgrade context-mode.
-
-## Current status
-
-No dependencies are required to read these files; there is no launch command. Local project inputs and execution records are ignored by Git. `.gitkeep` preserves directories; `board.md` remains empty.
-
-| Capability | Status |
-| --- | --- |
-| Chinese / English docs, rules, templates | Available |
-| Roles, review, escalation | Documented conventions |
-| Project and workflow inputs | Templates, manually read |
-| Claude adapter | Reserved, not implemented |
-| `codex exec` / `claude -p` adapters | Not implemented |
-| context-mode tools and updates | Documented and linked; runtime integration unverified |
-| 25-minute chunks and recovery | Policy documented; automation not implemented |
-| Board, counters, routing | Not implemented |
-| Allowance savings | Not benchmarked |
-
-Next decisions cover record formats, per-project routes, adapters, and deterministic rules. See the [workflow](docs/workflow.en.md).
+Local project inputs and task records are ignored by Git by default; still inspect actual files before publishing. No personal project background or special capability is enabled globally.
 
 ## Feedback and contributions
 
-Use GitHub **Issues** for feedback and bug reports. Fork the repository, create a branch, and submit a **Pull Request** for changes.
-**The repository owner decides whether to merge into `main`.** A submitted PR, approving review, or passing check is not automatic merge authorization. Agents must not push directly to `main`, merge PRs, or enable auto-merge.
+Use [Issues](https://github.com/jake2ace/multi-model-dev-framework/issues) for suggestions, onboarding problems, or sanitized trial results. Submit changes as PRs; **the repository owner decides whether to merge into `main`.**
 
-See [Contributing](CONTRIBUTING.en.md) / [简体中文](CONTRIBUTING.md). GitHub branch protections are maintained separately from these documentation rules.
+See [Contributing](CONTRIBUTING.en.md). GitHub permissions are configured separately; documentation does not grant or restrict account access.
 
 ## License
 
