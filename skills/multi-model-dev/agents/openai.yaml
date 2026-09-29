@@ -1,0 +1,4 @@
+interface:
+  display_name: "Multi-Model Dev"
+  short_description: "Plan a project with AI roles, review, and a budget"
+  default_prompt: "Use $multi-model-dev to help me start a project, agree on AI roles and a budget, and prepare the first small task."
