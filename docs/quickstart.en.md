@@ -6,6 +6,8 @@ Prepare two files, agree on assignments with your coordinator, and try one small
 
 **This version requires manual handoffs and record keeping.** The repository does not start other AIs, select models, or update a board automatically. The prompts below guide existing AI tools; they are not launch commands.
 
+Prefer having the AI gather requirements and fill the inputs? Start with [skill installation and testing](skill.en.md). The steps below remain available for manual use without the skill.
+
 ## 1. Prepare a local working copy
 
 You need Git and AI coding tools you are authorized to use. Check that the coordinator, executor, and reviewer can access the target project and task files. This framework does not sign you in or provision models.

@@ -1,0 +1,55 @@
+Multi-Model Dev Framework Source-Available License 1.0
+
+Copyright (c) 2026 the respective contributors.
+
+This is a custom source-available license, not an MIT license or an
+OSI-approved open-source license.
+
+1. Scope
+The Framework means this repository's software, configuration, templates,
+and documentation, including modified versions and substantial portions.
+Each contributor grants rights only to material they are entitled to license.
+Separately identified third-party material remains under its own license.
+
+2. Permission
+Subject to these terms, you may use, copy, modify, and redistribute the
+Framework without charging recipients for the Framework. You may use the
+Framework internally or as a development tool for commercial and
+noncommercial projects, including paid client work.
+
+3. No sale or paid hosted offering of the Framework
+You may not sell, sublicense for a fee, rent, or charge for distribution of
+the Framework or a modified version, whether standalone or as a paid
+framework component of a bundle. Renaming or modifying it does not remove
+this condition. Separate permission from the relevant rightsholders is
+required for these activities.
+You may not make the Framework or a modified version available to third
+parties as a paid hosted, managed, subscription, or API service whose
+provided functionality is the Framework itself, whether standalone or
+bundled. Charging for access to that functionality counts as a paid
+offering even when no copy of the Framework is distributed.
+
+4. Independent outputs and services
+This license does not claim ownership of independent code, documents, or
+other project outputs merely because the Framework helped produce them.
+You may sell those outputs and charge for development, installation,
+training, or support services, provided the charge is for your work and
+not for a Framework copy, license, or hosted access prohibited by section 3.
+You may host or sell independent products built using the Framework,
+provided the offering does not provide the Framework itself as a paid
+service. Framework material copied into an output remains covered by
+this license.
+
+5. Notices
+Redistributions must retain this license and existing copyright notices.
+Mark material changes clearly. Recipients receive permission directly
+under this license. Do not misrepresent authorship or endorsement.
+
+6. Warranty and liability
+To the extent permitted by applicable law, the Framework is provided
+as is, without warranties of any kind. The contributors are not liable
+for claims, damages, or other liability arising from its use or distribution.
+
+7. Other rights
+No trademark rights are granted. Rights not expressly granted are reserved.
+This license does not limit rights that cannot be restricted by applicable law.

@@ -27,6 +27,11 @@ These links show upstream content when opened. This repository neither vendors u
 
 Platform prefixes vary. Discover actual tools and input schemas in the running session rather than hardcoding a universal name. See the [upstream MCP implementation](https://github.com/mksglu/context-mode/blob/main/src/server.ts).
 
+## Optional installation through the skill
+
+During [skill kickoff](skill.en.md), the AI explains benefits and tradeoffs and offers install, skip, or check an existing installation. Large outputs may contribute less context; dependencies, configuration, latency, and local index storage add overhead, without guaranteed subscription savings.
+After opt-in, it uses host tools to verify current client/upstream instructions, preserve configuration, install/register, and check each integration layer. Restart or trust requirements stay pending; installed does not mean active. This is neither a background installer/updater nor a standalone setup program.
+
 ## Suggested workflow
 
 1. Before project execution, agree whether context-mode is required or optional in the workflow profile.

@@ -8,7 +8,7 @@ Talk to one coordinator about your goals. Executors do the work; reviewers inspe
 
 **The goal is to explore how multiple AIs can complete development with less allowance usage and better efficiency.** No benchmarks are complete. There is no promised saving percentage, and multiple models are not guaranteed to be faster than one.
 
-> **Available today: rules, project templates, and a manual collaboration workflow.** Model invocation, scheduling, counters, board updates, and timeout recovery are not implemented. There is no one-command launcher. Start by agreeing on a workflow profile, then manually trying one small task.
+> **Available today: a project kickoff skill, rules, project templates, and a manual collaboration workflow.** Model invocation, scheduling, counters, board updates, and timeout recovery are not implemented. There is no one-command launcher. Start by agreeing on a workflow profile, then manually trying one small task.
 
 ## Why use it?
 
@@ -22,7 +22,18 @@ Talk to one coordinator about your goals. Executors do the work; reviewers inspe
 
 These are design choices, not measured results. Reviews and handoffs also cost time and usage; a single model may be more suitable for a tiny task.
 
-## Get started in four steps
+## Recommended entry point: the kickoff skill
+
+[Install the `multi-model-dev` skill](docs/skill.en.md), then send this in a new project session:
+
+```text
+$multi-model-dev
+I want to build a new project: <your idea>. Help me agree on the first version, model assignments, and budget.
+```
+
+The skill helps fill the two input files through a short conversation and prepares first-task handoff prompts. Chinese and English are supported; automatic model dispatch is not implemented. **[Installation and testing guide](docs/skill.en.md)**.
+
+## Without installing the skill: four manual steps
 
 1. **Prepare your tools:** Git and AI coding tools/accounts you can actually use. Claude and context-mode are not required to begin.
 2. **Prepare two inputs:** Download or clone this repository. Copy the project context and workflow profile from `templates/` into local `projects/<project-id>/`. Keep your target project's existing rule files intact.
@@ -66,12 +77,13 @@ For long logs and large files, optional context-mode MCP tools can process and r
 - [Latest upstream release and features](https://github.com/mksglu/context-mode/releases/latest) · [All release notes](https://github.com/mksglu/context-mode/releases)
 - [How to compare usage, efficiency, and quality](docs/quickstart.en.md#how-to-check-whether-it-saves-usage-and-time)
 
-This repository does not install or integrate context-mode automatically. Fewer context tokens do not establish subscription allowance savings. The maintainer will compare configurations on real tasks and update guidance with the findings.
+The skill explains tradeoffs and asks whether to install context-mode. After opt-in, the AI uses host tools to install and verify each integration layer, reporting required restart or trust actions. Cloning the repository alone does not install or enable it. Fewer context tokens do not establish subscription allowance savings. The maintainer will compare configurations on real tasks and update guidance with the findings.
 
 ## Reference files, when you need them
 
 | File | Purpose |
 | --- | --- |
+| [Skill installation and testing](docs/skill.en.md) | Set up a project through conversation |
 | [First-run guide](docs/quickstart.en.md) | Preparation through a manual trial |
 | [Project context template](templates/PROJECT_CONTEXT.en.md) | Goals, constraints, and acceptance |
 | [Workflow profile template](templates/WORKFLOW_PROFILE.en.md) | Roles, models, budget, and failure handling |
